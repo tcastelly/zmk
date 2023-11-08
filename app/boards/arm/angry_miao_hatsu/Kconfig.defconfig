@@ -1,0 +1,10 @@
+
+if BOARD_ANGRY_MIAO_HATSU
+
+config BOARD
+	default "angry_miao_hatsu"
+
+config BT_CTLR
+	default BT
+
+endif # BOARD_ANGRY_MIAO_HATSU
