@@ -1,5 +1,15 @@
 
-if BOARD_ANGRY_MIAO_HATSU
+if BOARD_ANGRY_MIAO_HATSU_RIGHT
+
+config ZMK_KEYBOARD_NAME
+    default "Angry Miao Hatsu"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif # BOARD_ANGRY_MIAO_HATSU_RIGHT
+
+if BOARD_ANGRY_MIAO_HATSU_LEFT || BOARD_ANGRY_MIAO_HATSU_RIGHT
 
 config BOARD
 	default "angry_miao_hatsu"
@@ -7,4 +17,19 @@ config BOARD
 config BT_CTLR
 	default BT
 
-endif # BOARD_ANGRY_MIAO_HATSU
+config BT
+    default y
+
+config ZMK_BLE
+    default y
+
+config ZMK_SPLIT
+    default y
+
+config USB_NRFX
+    default y
+
+config ZMK_USB
+    default y
+
+endif # BOARD_ANGRY_MIAO_HATSU_LEFT || BOARD_ANGRY_MIAO_HATSU_RIGHT

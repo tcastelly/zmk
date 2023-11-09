@@ -3,6 +3,10 @@
 # Copyright (c) 2016 Nordic Semiconductor ASA
 # SPDX-License-Identifier: Apache-2.0
 
-config BOARD_ANGRY_MIAO_HATSU
-	bool "Angry Miao Hatsu"
+config BOARD_ANGRY_MIAO_HATSU_RIGHT
+	bool "Angry Miao Hatsu Right"
+	depends on SOC_NRF52840_QIAA
+
+config BOARD_ANGRY_MIAO_HATSU_LEFT
+	bool "Angry Miao Hatsu Left"
 	depends on SOC_NRF52840_QIAA
