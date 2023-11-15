@@ -24,5 +24,158 @@
 };
 
 &layout_grid_transform {
-    col-offset = <8>;
+    col-offset = < 4 >;
+    row-offset = < 8 >;
+};
+
+&pinctrl {
+    spi0_default: spi0_default {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 20)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 24)>,
+				<NRF_PSEL(SPIM_MISO, 0, 23)>;
+		};
+	};
+
+	spi0_sleep: spi0_sleep {
+		group1 {
+			psels = <NRF_PSEL(SPIM_SCK, 0, 20)>,
+				<NRF_PSEL(SPIM_MOSI, 0, 24)>,
+				<NRF_PSEL(SPIM_MISO, 0, 23)>;
+			low-power-enable;
+		};
+	};
+};
+
+&spi0 {
+	compatible = "nordic,nrf-spim";
+	status = "okay";
+	pinctrl-0 = <&spi0_default>;
+	pinctrl-1 = <&spi0_sleep>;
+	pinctrl-names = "default", "sleep";
+    overrun-character = < 0 >;
+
+    cs-gpios = <&gpio1 3 GPIO_ACTIVE_LOW>;
+    aw2016s: aw20216s@0 {
+        compatible = "awinic,aw20216s";
+        reg = <0>;
+        en-gpios = <&gpio1 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        spi-max-frequency = <1000000>;
+
+        rgb_led0_r: rgb_led0_r {
+            index = <17>;
+        };
+        rgb_led0_g: rgb_led0_g {
+            index = <16>;
+        };
+        rgb_led0_b: rgb_led0_b {
+            index = <15>;
+        };
+        rgb_led1_r: rgb_led1_r {
+            index = <125>;
+        };
+        rgb_led1_g: rgb_led1_g {
+            index = <124>;
+        };
+        rgb_led1_b: rgb_led1_b {
+            index = <123>;
+        };
+        rgb_led2_r: rgb_led2_r {
+            index = <161>;
+        };
+        rgb_led2_g: rgb_led2_g {
+            index = <160>;
+        };
+        rgb_led2_b: rgb_led2_b {
+            index = <159>;
+        };
+        rgb_led3_r: rgb_led3_r {
+            index = <197>;
+        };
+        rgb_led3_g: rgb_led3_g {
+            index = <196>;
+        };
+        rgb_led3_b: rgb_led3_b {
+            index = <195>;
+        };
+
+        backlight_led_0: backlight_led_0 {
+            index = <36>;
+        };
+        backlight_led_1: backlight_led_1 {
+            index = <37>;
+        };
+        backlight_led_2: backlight_led_2 {
+            index = <38>;
+        };
+        backlight_led_3: backlight_led_3 {
+            index = <39>;
+        };
+        backlight_led_4: backlight_led_4 {
+            index = <40>;
+        };
+        backlight_led_5: backlight_led_5 {
+            index = <41>;
+        };
+        backlight_led_6: backlight_led_6 {
+            index = <42>;
+        };
+        backlight_led_7: backlight_led_7 {
+            index = <46>;
+        };
+        backlight_led_8: backlight_led_8 {
+            index = <54>;
+        };
+        backlight_led_9: backlight_led_9 {
+            index = <55>;
+        };
+        backlight_led_10: backlight_led_10 {
+            index = <56>;
+        };
+        backlight_led_11: backlight_led_11 {
+            index = <57>;
+        };
+        backlight_led_12: backlight_led_12 {
+            index = <58>;
+        };
+        backlight_led_13: backlight_led_13 {
+            index = <59>;
+        };
+        backlight_led_14: backlight_led_14 {
+            index = <60>;
+        };
+        backlight_led_15: backlight_led_15 {
+            index = <64>;
+        };
+        backlight_led_16: backlight_led_16 {
+            index = <72>;
+        };
+        backlight_led_17: backlight_led_17 {
+            index = <73>;
+        };
+        backlight_led_18: backlight_led_18 {
+            index = <74>;
+        };
+        backlight_led_19: backlight_led_19 {
+            index = <75>;
+        };
+        backlight_led_20: backlight_led_20 {
+            index = <76>;
+        };
+        backlight_led_21: backlight_led_21 {
+            index = <77>;
+        };
+        backlight_led_22: backlight_led_22 {
+            index = <78>;
+        };
+        backlight_led_23: backlight_led_23 {
+            index = <82>;
+        };
+        backlight_led_24: backlight_led_24 {
+            index = <92>;
+        };
+        backlight_led_25: backlight_led_25 {
+            index = <93>;
+        };
+    };
 };
