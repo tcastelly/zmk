@@ -343,6 +343,10 @@ config ZMK_EXT_POWER
     bool "Enable support to control external power output"
     default y
 
+config ZMK_BATTERY_INDICATOR
+    bool "Enable battery indicator"
+    default n
+
 #Power Management
 endmenu
 

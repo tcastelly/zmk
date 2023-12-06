@@ -1,0 +1,12 @@
+#
+# Copyright (c) 2022 The ZMK Contributors
+#
+# SPDX-License-Identifier: MIT
+#
+
+description: >
+  CW2015 Fuel Gauge
+
+compatible: "cellwise,cw2015"
+
+include: [i2c-device.yaml]

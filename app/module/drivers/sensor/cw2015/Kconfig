@@ -1,0 +1,23 @@
+# Copyright (c) 2022 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+DT_COMPAT_CELLWISE_CW2015 := cellwise,cw2015
+
+menuconfig CW2015
+    bool "CW2015 I2C-based Fuel Gauge"
+    default $(dt_compat_enabled,$(DT_COMPAT_CELLWISE_CW2015))
+    depends on I2C
+    select ZMK_BATTERY
+    help
+      Enable driver for CW2015 I2C-based Fuel Gauge. Supports measuring
+      battery voltage and state-of-charge.
+
+if CW2015
+
+config SENSOR_CW2015_INIT_PRIORITY
+    int "Init priority"
+    default 75
+    help
+      Device driver initialization priority.
+
+endif #CW2015
