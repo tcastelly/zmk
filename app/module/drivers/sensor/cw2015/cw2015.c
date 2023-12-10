@@ -92,6 +92,7 @@ static int cw2015_sample_fetch(const struct device *dev, enum sensor_channel cha
             goto done;
         }
         LOG_DBG("read soc: %d", drv_data->raw_state_of_charge);
+        goto done;
     }
     if (chan == SENSOR_CHAN_GAUGE_VOLTAGE || chan == SENSOR_CHAN_ALL) {
         err = read_register(dev, REG_VCELL, &drv_data->raw_vcell);
@@ -100,6 +101,7 @@ static int cw2015_sample_fetch(const struct device *dev, enum sensor_channel cha
             goto done;
         }
         LOG_DBG("read vcell: %d", drv_data->raw_vcell);
+        goto done;
     }
     if (chan == SENSOR_CHAN_GAUGE_TIME_TO_EMPTY || chan == SENSOR_CHAN_ALL) {
         err = read_register(dev, REG_REMAINING_RUN_TIME, &drv_data->remaining_run_time);
@@ -108,6 +110,7 @@ static int cw2015_sample_fetch(const struct device *dev, enum sensor_channel cha
             goto done;
         }
         LOG_DBG("read remaining run time: %d", drv_data->remaining_run_time);
+        goto done;
 
     } else {
         LOG_DBG("unsupported channel %d", chan);
