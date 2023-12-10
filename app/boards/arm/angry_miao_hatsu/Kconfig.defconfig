@@ -1,5 +1,5 @@
 
-if BOARD_ANGRY_MIAO_HATSU_RIGHT
+if BOARD_ANGRY_MIAO_HATSU_LEFT
 
 config ZMK_KEYBOARD_NAME
     default "Angry Miao Hatsu"

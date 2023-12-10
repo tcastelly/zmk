@@ -20,31 +20,11 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 static int behavior_battery_indicator_init(const struct device *dev) { return 0; }
 
-static int
-on_keymap_binding_convert_central_state_dependent_params(struct zmk_behavior_binding *binding,
-                                                         struct zmk_behavior_binding_event event) {
-    switch (binding->param1) {
-    case BAT_IND_TOG_CMD:
-        binding->param1 = zmk_battery_indicator_is_on() ? BAT_IND_OFF_CMD : BAT_IND_ON_CMD;
-        break;
-    default:
-        return 0;
-    }
-
-    LOG_DBG("Battery indicator command (%d)", binding->param1);
-
-    return 0;
-}
-
 static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event) {
     switch (binding->param1) {
-    case BAT_IND_ON_CMD:
-        return zmk_battery_indicator_on();
-    case BAT_IND_OFF_CMD:
-        return zmk_battery_indicator_off();
-    case BAT_IND_TOG_CMD:
-        return zmk_battery_indicator_toggle();
+    case BAT_IND_SHOW_CMD:
+        return zmk_battery_indicator_show();
     default:
         LOG_ERR("Unknown battery indicator command: %d", binding->param1);
     }
@@ -58,8 +38,6 @@ static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
 }
 
 static const struct behavior_driver_api behavior_battery_indicator_driver_api = {
-    .binding_convert_central_state_dependent_params =
-        on_keymap_binding_convert_central_state_dependent_params,
     .binding_pressed = on_keymap_binding_pressed,
     .binding_released = on_keymap_binding_released,
     .locality = BEHAVIOR_LOCALITY_GLOBAL,

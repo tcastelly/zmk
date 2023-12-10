@@ -7,3 +7,6 @@ properties:
   led-channels:
     type: phandle-array
     required: true
+  colors:
+    type: uint8-array 
+    required: false 

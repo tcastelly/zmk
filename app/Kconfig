@@ -347,6 +347,14 @@ config ZMK_BATTERY_INDICATOR
     bool "Enable battery indicator"
     default n
 
+config ZMK_BATTERY_INDICATOR_DURATION
+    int "Battery indicator duration in seconds"
+    default 5
+
+config ZMK_BATTERY_INDICATOR_COLOR
+    hex "Battery indicator color as hex 0xRRGGBB"
+    default 0x0000FF
+
 #Power Management
 endmenu
 

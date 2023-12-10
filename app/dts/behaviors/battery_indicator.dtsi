@@ -6,7 +6,7 @@
 
 / {
     behaviors {
-        /omit-if-no-ref/ battery_indicator: behavior_battery_indicator {
+        /omit-if-no-ref/ bat: behavior_battery_indicator {
             compatible = "zmk,behavior-battery-indicator";
             label = "BAT_IND";
             #binding-cells = <1>;
