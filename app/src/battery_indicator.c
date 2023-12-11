@@ -20,6 +20,10 @@
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
+#define RED 0
+#define GREEN 1
+#define BLUE 2
+
 static const struct device *const battery_indicator_dev =
     DEVICE_DT_GET(DT_CHOSEN(zmk_battery_indicator));
 
@@ -41,46 +45,70 @@ static uint32_t battery_indicator_map_array[] = {LISTIFY(
 static uint8_t battery_indicator_color_map[] =
     DT_PROP(DT_CHOSEN(zmk_battery_indicator_map), colors);
 
-// TODO: When indicator is on, set up a workqueue item to get the state of charge and update
-// zmk_battery_indicator_map
-// should use zmk_battery_state_of_charge from zmk/battery.h
-
-static int set_brightness_all_leds(uint8_t brightness) {
+static int set_bar_leds(uint32_t color, uint8_t bar_length) {
     int err;
 
-    uint8_t red = (CONFIG_ZMK_BATTERY_INDICATOR_COLOR >> 16) & 0xFF;
-    uint8_t green = (CONFIG_ZMK_BATTERY_INDICATOR_COLOR >> 8) & 0xFF;
-    uint8_t blue = CONFIG_ZMK_BATTERY_INDICATOR_COLOR & 0xFF;
+    uint8_t red = (color >> 16) & 0xFF;
+    uint8_t green = (color >> 8) & 0xFF;
+    uint8_t blue = color & 0xFF;
 
-    // Scaling the RGB components
-    uint32_t scaled_red = (red * brightness) / 255;
-    uint32_t scaled_green = (green * brightness) / 255;
-    uint32_t scaled_blue = (blue * brightness) / 255;
+    for (int i = 0; i < bar_length * 3; i++) {
+        if (battery_indicator_color_map[i] == RED) {
+            err = led_set_brightness(battery_indicator_dev, battery_indicator_map_array[i], red);
+        } else if (battery_indicator_color_map[i] == GREEN) {
+            err = led_set_brightness(battery_indicator_dev, battery_indicator_map_array[i], green);
+        } else if (battery_indicator_color_map[i] == BLUE) {
+            err = led_set_brightness(battery_indicator_dev, battery_indicator_map_array[i], blue);
+        } else {
+            LOG_ERR("Invalid color map value: %d", battery_indicator_color_map[i]);
+            return -EINVAL;
+        }
+    }
+
+    for (int i = bar_length * 3; i < BATTERY_IND_NUM_LEDS; i++) {
+        err = led_set_brightness(battery_indicator_dev, battery_indicator_map_array[i], 0);
+    }
+
+    return err;
+}
+
+static int set_color_all_leds(uint32_t color, uint8_t state_of_charge) {
+
+    int err;
+
+    uint8_t red = (color >> 16) & 0xFF;
+    uint8_t green = (color >> 8) & 0xFF;
+    uint8_t blue = color & 0xFF;
+
+    uint32_t scaled_red = (red * state_of_charge) / 100;
+    uint32_t scaled_green = (green * state_of_charge) / 100;
+    uint32_t scaled_blue = (blue * state_of_charge) / 100;
 
     for (int i = 0; i < BATTERY_IND_NUM_LEDS; i++) {
-        if (battery_indicator_color_map[i] == 0) {
+        if (battery_indicator_color_map[i] == RED) {
             err = led_set_brightness(battery_indicator_dev, battery_indicator_map_array[i],
                                      scaled_red);
-        } else if (battery_indicator_color_map[i] == 1) {
+        } else if (battery_indicator_color_map[i] == GREEN) {
             err = led_set_brightness(battery_indicator_dev, battery_indicator_map_array[i],
                                      scaled_green);
-        } else if (battery_indicator_color_map[i] == 2) {
+        } else if (battery_indicator_color_map[i] == BLUE) {
             err = led_set_brightness(battery_indicator_dev, battery_indicator_map_array[i],
                                      scaled_blue);
         } else {
             LOG_ERR("Invalid color map value: %d", battery_indicator_color_map[i]);
             return -EINVAL;
         }
+    }
+}
 
-        if (err != 0) {
-            LOG_ERR("Failed to update battery indicator LED %d: %d", i, err);
-            return err;
-        }
+static int set_default_indicator(void) {
+    int err;
+    err = set_color_all_leds(CONFIG_ZMK_BATTERY_INDICATOR_DEFAULT_COLOR, 100);
+    if (err) {
+        LOG_ERR("Unable to set default indicator: %d", err);
     }
     return err;
 }
-
-static int turn_off_indicator(void) { return set_brightness_all_leds(0); }
 
 static int zmk_battery_indicator_update() {
     // TODO: get battery value and update zmk_battery_indicator_map
@@ -88,10 +116,23 @@ static int zmk_battery_indicator_update() {
 
     LOG_DBG("Battery state of charge: %d", state_of_charge);
 
-    int err = set_brightness_all_leds(state_of_charge);
+    int err;
+
+#ifdef CONFIG_ZMK_BATTERY_INDICATOR_BRIGHTNESS
+    err = set_color_all_leds(CONFIG_ZMK_BATTERY_INDICATOR_COLOR, state_of_charge);
     if (err) {
         LOG_ERR("Unable to update battery indicator: %d", err);
     }
+#endif
+
+#ifdef CONFIG_ZMK_BATTERY_INDICATOR_BAR
+    uint8_t bar_length = ((state_of_charge * BATTERY_IND_NUM_LEDS) / 100) / 3;
+    err = set_bar_leds(CONFIG_ZMK_BATTERY_INDICATOR_COLOR, bar_length);
+    if (err) {
+        LOG_ERR("Unable to update battery indicator: %d", err);
+    }
+#endif
+
     return err;
 }
 
@@ -104,23 +145,27 @@ static void zmk_battery_indicator_update_work(struct k_work *work) {
 
 K_WORK_DEFINE(battery_indicator_update_work, zmk_battery_indicator_update_work);
 
-static void zmk_battery_indicator_off_work(struct k_work *work) {
-    int err = turn_off_indicator();
+static void zmk_battery_indicator_default_work(struct k_work *work) {
+    int err = set_default_indicator();
     if (err) {
         LOG_ERR("Unable to disable indicator %d", err);
     }
 }
 
-K_WORK_DEFINE(battery_indicator_off_work, zmk_battery_indicator_off_work);
+K_WORK_DEFINE(battery_indicator_default_work, zmk_battery_indicator_default_work);
 
-static void zmk_battery_indicator_off_timer(struct k_timer *timer) {
-    k_work_submit_to_queue(zmk_workqueue_lowprio_work_q(), &battery_indicator_off_work);
+static void zmk_battery_indicator_default_timer(struct k_timer *timer) {
+    k_work_submit_to_queue(zmk_workqueue_lowprio_work_q(), &battery_indicator_default_work);
 }
 
-K_TIMER_DEFINE(battery_indicator_timer, zmk_battery_indicator_off_timer, NULL);
+K_TIMER_DEFINE(battery_indicator_timer, zmk_battery_indicator_default_timer, NULL);
 
 int zmk_battery_indicator_show() {
     k_timer_start(&battery_indicator_timer, K_SECONDS(CONFIG_ZMK_BATTERY_INDICATOR_DURATION),
                   K_NO_WAIT);
     return k_work_submit_to_queue(zmk_workqueue_lowprio_work_q(), &battery_indicator_update_work);
 }
+
+int zmk_battery_indicator_init(void) { return set_default_indicator(); }
+
+SYS_INIT(zmk_battery_indicator_init, APPLICATION, CONFIG_APPLICATION_INIT_PRIORITY);

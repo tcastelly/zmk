@@ -352,8 +352,18 @@ config ZMK_BATTERY_INDICATOR_DURATION
     default 5
 
 config ZMK_BATTERY_INDICATOR_COLOR
-    hex "Battery indicator color as hex 0xRRGGBB"
+    hex "Battery indicator color, when indicating, as hex 0xRRGGBB"
     default 0x0000FF
+
+config ZMK_BATTERY_INDICATOR_DEFAULT_COLOR
+    hex "Battery indicator default color as hex 0xRRGGBB"
+    default 0x00FF00
+
+config ZMK_BATTERY_INDICATOR_BAR
+    bool "Battery indicator as a bar"
+
+config ZMK_BATTERY_INDICATOR_BRIGHTNESS
+    bool "Battery indicator brightness"
 
 #Power Management
 endmenu
