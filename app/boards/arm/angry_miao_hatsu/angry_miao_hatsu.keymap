@@ -4,20 +4,35 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/battery_indicator.h>
 
+#define DEFAULT 0
+#define FUNCTION 1
+
 / {
     keymap {
         compatible = "zmk,keymap";
-
         layer_1 {
-            label = "base";
+            label = "default";
             bindings = <
-                &kp ESC &bat BAT_IND &kp W &kp E &kp R &kp T    &kp Y &kp U &kp I &kp O &kp P &kp BACKSLASH
-                &kp TAB &kp A &kp S &kp D &kp F &kp G    &kp H &kp J &kp K &kp L &kp SEMICOLON &kp APOSTROPHE
-                &kp A &kp Z &kp X &kp C &kp V &kp B      &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &kp A
-                            &kp A &kp A                              &kp LBKT &kp RBKT
-                &kp RSHIFT &kp SPACE                                             &kp ENTER &kp BACKSPACE
-                &kp LALT &kp LCTRL                                               &kp RCTRL &kp RALT
-                &bat BAT_IND &kp DEL                                                    &bt BT_CLR &out OUT_TOG
+            &kp ESC &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &kp O &kp P &kp BACKSLASH
+            &kp TAB &kp A &kp S &kp D &kp F &kp G           &kp H &kp J &kp K &kp L &kp SEMICOLON &kp APOSTROPHE
+            &mo FUNCTION &kp Z &kp X &kp C &kp V &kp B      &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &mo FUNCTION
+                        &kp CAPS &tog FUNCTION                              &kp LBKT &kp RBKT
+                        &kp LSHIFT &kp SPACE                                &kp ENTER &kp BACKSPACE
+                        &kp A&kp B                                         &kp C &kp D 
+                        &kp E &kp F                                         &kp G &kp H
+            >;
+        };
+
+        layer_2 {
+            label = "function";
+            bindings = <
+            &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6                &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12
+            &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6                &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp EQUAL 
+            &trans &kp GRAVE &kp PSCRN &kp INS &kp HOME &kp END      &kp PG_UP &kp PG_DN &kp K_APP &kp UP &kp RIGHT &trans
+                        &trans &trans                                             &kp LEFT &kp DOWN 
+                        &trans &trans                                             &trans &trans
+                        &trans &trans                                             &trans &trans
+                        &trans &trans                                             &trans &trans
             >;
         };
     };

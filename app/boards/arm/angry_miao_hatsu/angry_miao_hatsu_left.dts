@@ -12,6 +12,7 @@
         zmk,battery = &cw2015;
         zmk,battery-indicator = &aw2016s;
     };
+    
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         label = "KSCAN";
