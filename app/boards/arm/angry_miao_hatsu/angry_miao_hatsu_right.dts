@@ -85,11 +85,6 @@
     };
 };
 
-&layout_grid_transform {
-    col-offset = < 4 >;
-    row-offset = < 8 >;
-};
-
 &pinctrl {
     spi0_default: spi0_default {
 		group1 {
