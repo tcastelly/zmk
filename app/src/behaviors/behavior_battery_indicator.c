@@ -24,7 +24,8 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event) {
     switch (binding->param1) {
     case BAT_IND_SHOW_CMD:
-        return zmk_battery_indicator_show();
+        zmk_battery_indicator_show();
+        return ZMK_BEHAVIOR_OPAQUE;
     default:
         LOG_ERR("Unknown battery indicator command: %d", binding->param1);
     }
