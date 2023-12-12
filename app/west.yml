@@ -4,9 +4,11 @@ manifest:
       url-base: https://github.com/zephyrproject-rtos
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
+    - name: hlord2000
+      url-base: https://github.com/hlord2000
   projects:
     - name: zephyr
-      remote: zmkfirmware
+      remote: hlord2000 
       revision: v3.2.0+zmk-fixes
       clone-depth: 1
       import:
