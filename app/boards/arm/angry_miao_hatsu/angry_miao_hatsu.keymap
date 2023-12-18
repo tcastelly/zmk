@@ -40,7 +40,7 @@
         layer_3 {
             label = "system";
             bindings = <
-            &bl BL_TOG &bat BAT_IND &sys_reset &bt BT_CLR &trans &trans                &trans &trans &bt BT_CLR &sys_reset &bat BAT_IND &bl BL_TOG
+            &bl BL_TOG &bat BAT_IND &sys_reset &bootloader &bt BT_CLR &trans                &trans &bt BT_CLR &bootloader &sys_reset &bat BAT_IND &bl BL_TOG
             &trans &trans &trans &trans &trans &trans                &trans &trans &trans &trans &trans &trans
             &trans &trans &trans &trans &trans &trans                &trans &trans &trans &trans &trans
                    &trans &trans                                                   &trans &trans

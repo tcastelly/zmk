@@ -113,5 +113,6 @@
             label = "adafruit_boot";
             reg = <0x000f4000 0x0000c000>;
         };
+
     };
 };
