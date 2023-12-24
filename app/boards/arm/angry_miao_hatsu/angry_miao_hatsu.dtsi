@@ -39,6 +39,22 @@
             >;
     };
  };
+
+/ {
+    left_bootloader_key: left_bootloader_key {
+        compatible = "zmk,boot-magic-key";
+        key-position = <0>;
+        jump-to-bootloader;
+        status = "disabled";
+    };
+
+    right_bootloader_key: right_bootloader_key {
+        compatible = "zmk,boot-magic-key";
+        key-position = <11>;
+        jump-to-bootloader;
+        status = "disabled";
+    };
+};
  
  &adc {
      status = "okay";

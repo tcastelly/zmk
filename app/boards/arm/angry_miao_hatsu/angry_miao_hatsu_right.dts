@@ -85,6 +85,10 @@
     };
 };
 
+&right_bootloader_key {
+    status = "okay";
+};
+
 &pinctrl {
     spi0_default: spi0_default {
 		group1 {

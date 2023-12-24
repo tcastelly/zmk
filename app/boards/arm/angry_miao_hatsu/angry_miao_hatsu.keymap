@@ -21,7 +21,7 @@
                         &kp CAPS &tog FUNCTION                              &kp LBKT &kp RBKT
                         &kp LSHIFT &kp SPACE                                &kp ENTER &kp BACKSPACE
                         &kp LALT &kp LCTRL                                  &kp RCTRL &kp RALT 
-                        &mo SYSTEM &kp DEL                                  &kp RMETA &mo SYSTEM
+                        &mo SYSTEM &kp DEL                                  &kp RGUI &mo SYSTEM
             >;
         };
 
@@ -41,8 +41,8 @@
             label = "system";
             bindings = <
             &bl BL_TOG &bat BAT_IND &sys_reset &bootloader &bt BT_CLR &trans                &trans &bt BT_CLR &bootloader &sys_reset &bat BAT_IND &bl BL_TOG
-            &trans &trans &trans &trans &trans &trans                &trans &trans &trans &trans &trans &trans
-            &trans &trans &trans &trans &trans &trans                &trans &trans &trans &trans &trans
+            &bt BT_NXT &trans &trans &trans &trans &trans                &trans &trans &trans &trans &trans &trans
+            &bt BT_PRV &trans &trans &trans &trans &trans                &trans &trans &trans &trans &trans
                    &trans &trans                                                   &trans &trans
                    &trans &trans                                                   &trans &trans
                    &trans &trans                                                   &trans &trans
