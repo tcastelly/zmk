@@ -7,12 +7,107 @@
 
 #define _DEFAULT 0
 #define _DEFAULT_OSX 1
-#define _ESC 3
-#define _ESC_OSX 4
-#define _FUNCTION 5
-#define _SYSTEM 6
+#define _ESC 2
+#define _ESC_OSX 3
+#define _ACCENTS_RALT 4
+#define _LOWER 5
+#define _RAISE 6
+#define _SYSTEM 7
 
 / {
+    macros {
+        macro_ralt: macro_ralt {
+            compatible = "zmk,behavior-macro";
+            label = "MACRO RALT";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &mo _ACCENTS_RALT &kp RALT>
+                , <&macro_pause_for_release>
+                , <&macro_release &mo _ACCENTS_RALT &kp RALT>
+                ;
+        };
+
+        macro_jet_rnm: macro_jet_rnm {
+            compatible = "zmk,behavior-macro";
+            label = "MACRO Jetbrains Rename";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LSHFT &kp F6>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp LSHFT &kp F6>
+                ;
+        };
+
+        macro_jet_find: macro_jet_find {
+            compatible = "zmk,behavior-macro";
+            label = "MACRO Jetbrains Find";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LALT &kp F1>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp F1 &kp LALT>
+                , <&macro_tap &kp N1>
+                ;
+        };
+
+        macro_grave_e: macro_grave_e {
+            compatible = "zmk,behavior-macro";
+            label = "MACRO Grave E";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp RALT &kp GRAVE>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp GRAVE &kp RALT>
+                , <&macro_tap &kp E>
+                ;
+        };
+
+        macro_grave_a: macro_grave_a {
+            compatible = "zmk,behavior-macro";
+            label = "MACRO Grave A";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp RALT &kp GRAVE>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp GRAVE &kp RALT>
+                , <&macro_tap &kp A>
+                ;
+        };
+
+       macro_accent_trema: macro_accent_trema {
+            compatible = "zmk,behavior-macro";
+            label = "MACRO Trema Accent";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp RALT &kp LSHFT &kp APOSTROPHE>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp APOSTROPHE &kp LSHFT &kp RALT>
+                ;
+       };
+
+        macro_accent_grave: macro_accent_grave {
+            compatible = "zmk,behavior-macro";
+            label = "MACRO Grave Accent";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp RALT &kp GRAVE>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp GRAVE &kp RALT>
+                ;
+        };
+
+        macro_accent_circum: macro_accent_circum {
+            compatible = "zmk,behavior-macro";
+            label = "MACRO Circum Accent";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp RALT &kp N6>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp N6 &kp RALT>
+                ;
+        };
+    };
+
     behaviors {
         td_layr: tap_dance_layer {
             compatible = "zmk,behavior-hold-tap";
@@ -40,76 +135,103 @@
         layer_1 {
             label = "default";
             bindings = <
-            &td_key TILDE TAB &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &kp O &kp P &kp BACKSLASH
-            &td_layr _ESC ESC  &kp A &kp S &kp D &kp F &kp G           &kp H &kp J &kp K &kp L &kp SEMICOLON &kp APOSTROPHE
-            &kp LSHIFT &kp Z &kp X &kp C &kp V &kp B      &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &mo _FUNCTION
-                        &kp LSHIFT &tog _FUNCTION                              &kp LBKT &kp RBKT
-                        &kp LSHIFT &kp SPACE                                &kp ENTER &kp BACKSPACE
-                        &kp LALT &kp LCTRL                                  &kp RCTRL &kp RALT
-                        &mo _SYSTEM &kp DEL                                  &kp RGUI &mo _SYSTEM
+            &td_key TILDE TAB &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &td_key LPAR O &td_key RPAR P &td_key LC(BSPC) BSPC
+            &td_layr _ESC ESC  &kp A &kp S &kp D &kp F &kp G          &kp H &kp J &kp K &td_key LBRC L &td_key RBRC SEMICOLON &kp APOSTROPHE
+            &kp LSHIFT &kp Z &kp X &kp C &kp V &kp B                  &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &td_key LSHFT ENTER
+                        &kp PAGE_UP &kp PAGE_DOWN                          &kp LBKT &kp RBKT
+                        &kp LCTRL &to _LOWER                               &kp SPACE &to _RAISE
+                        &kp LWIN &kp LALT                                  &macro_ralt &kp RCTRL
+                        &mo _SYSTEM &kp DEL                                &kp RGUI &mo _SYSTEM
             >;
         };
 
         layer_2 {
             label = "default_osx";
             bindings = <
-            &kp ESC &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &kp O &kp P &kp BACKSLASH
-            &kp TAB &kp A &kp S &kp D &kp F &kp G           &kp H &kp J &kp K &kp L &kp SEMICOLON &kp APOSTROPHE
-            &mo _FUNCTION &kp Z &kp X &kp C &kp V &kp B      &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &mo _FUNCTION
-                        &kp CAPS &tog _FUNCTION                              &kp LBKT &kp RBKT
-                        &kp LSHIFT &kp SPACE                                &kp ENTER &kp BACKSPACE
-                        &kp LALT &kp LCTRL                                  &kp RCTRL &kp RALT
-                        &mo _SYSTEM &kp DEL                                  &kp RGUI &mo _SYSTEM
+            &td_key TILDE TAB &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &td_key LPAR O &td_key RPAR P &td_key RA(BSPC) BSPC
+            &td_layr _ESC_OSX ESC  &kp A &kp S &kp D &kp F &kp G      &kp H &kp J &kp K &td_key LBRC L &td_key RBRC SEMICOLON &kp APOSTROPHE
+            &kp LSHIFT &kp Z &kp X &kp C &kp V &kp B                  &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &td_key LSHFT ENTER
+                        &kp PAGE_UP &kp PAGE_DOWN                          &kp LBKT &kp RBKT
+                        &kp LCTRL &to _LOWER                               &kp SPACE &to _RAISE
+                        &kp LWIN &kp LGUI                                  &macro_ralt &kp RCTRL
+                        &mo _SYSTEM &kp DEL                                &kp RGUI &mo _SYSTEM
             >;
         };
 
         layer_3 {
             label = "esc";
             bindings = <
-            &kp ESC &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &kp O &kp P &kp BACKSLASH
-            &kp TAB &kp A &kp S &kp D &kp F &kp G           &kp H &kp J &kp K &kp L &kp SEMICOLON &kp APOSTROPHE
-            &mo _FUNCTION &kp Z &kp X &kp C &kp V &kp B      &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &mo _FUNCTION
-                        &kp CAPS &tog _FUNCTION                              &kp LBKT &kp RBKT
-                        &kp LSHIFT &kp SPACE                                &kp ENTER &kp BACKSPACE
-                        &kp LALT &kp LCTRL                                  &kp RCTRL &kp RALT
-                        &mo _SYSTEM &kp DEL                                  &kp RGUI &mo _SYSTEM
+            &trans &macro_accent_grave &trans &macro_grave_e &macro_jet_rnm &trans         &macro_accent_circum &trans &trans &trans &trans &td_key LC(DEL) DEL
+            &trans &macro_grave_a &trans &trans &macro_jet_find &trans                     &td_key LC(LEFT) LEFT  &kp DOWN &kp UP &td_key LA(RIGHT) RIGHT &trans &macro_accent_trema
+            &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans
+                        &trans &trans                                                      &trans &trans
+                        &trans &trans                                                      &trans &trans
+                        &trans &trans                                                      &trans &trans
+                        &trans &trans                                                      &trans &trans
             >;
         };
 
         layer_4 {
             label = "esc_osx";
             bindings = <
-            &kp ESC &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &kp O &kp P &kp BACKSLASH
-            &kp TAB &kp A &kp S &kp D &kp F &kp G           &kp H &kp J &kp K &kp L &kp SEMICOLON &kp APOSTROPHE
-            &mo _FUNCTION &kp Z &kp X &kp C &kp V &kp B      &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &mo _FUNCTION
-                        &kp CAPS &tog _FUNCTION                              &kp LBKT &kp RBKT
-                        &kp LSHIFT &kp SPACE                                &kp ENTER &kp BACKSPACE
-                        &kp LALT &kp LCTRL                                  &kp RCTRL &kp RALT
-                        &mo _SYSTEM &kp DEL                                  &kp RGUI &mo _SYSTEM
+            &trans &macro_accent_grave &trans &macro_grave_e &macro_jet_rnm &trans         &macro_accent_circum &trans &trans &trans &trans &td_key LA(DEL) DEL
+            &trans &macro_grave_a &trans &trans &macro_jet_find &trans                     &td_key LA(LEFT) LEFT  &kp DOWN &kp UP &td_key LC(RIGHT) RIGHT &trans &macro_accent_trema
+            &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans
+                        &trans &trans                                                      &trans &trans
+                        &trans &trans                                                      &trans &trans
+                        &trans &trans                                                      &trans &trans
+                        &trans &trans                                                      &trans &trans
             >;
         };
 
         layer_5 {
-            label = "function";
+            label = "accents_ralt";
             bindings = <
-            &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6                &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12
-            &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6                &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp EQUAL
-            &trans &kp GRAVE &kp PSCRN &kp INS &kp HOME &kp END      &kp PG_UP &kp PG_DN &kp K_APP &kp UP &kp RIGHT &trans
-                        &trans &trans                                             &kp LEFT &kp DOWN
+            &trans &trans &trans &trans &trans &trans         &trans &trans &trans &trans &trans &trans
+            &trans &trans &trans &trans &trans &trans         &trans &trans &trans &trans &trans &trans
+            &trans &trans &trans &kp COMMA &trans &trans      &trans &trans &trans &trans &trans &trans
+                        &trans &trans                         &trans &trans
+                        &trans &trans                         &trans &trans
+                        &trans &trans                         &trans &trans
+                        &trans &trans                         &trans &trans
+            >;
+        };
+
+        layer_6 {
+            label = "lower";
+            bindings = <
+            &kp TILDE &kp EXCLAMATION &kp AT &kp HASH &kp DOLLAR &kp PERCENT   &kp CARET &kp AMPERSAND &kp STAR &kp LEFT_PARENTHESIS &kp RIGHT_PARENTHESIS &kp DEL
+            &kp CAPS &kp F1 &kp F2 &kp F3 &kp F4 &kp F5                        &kp F6 &kp MINUS &kp PLUS &kp LEFT_BRACE &kp RIGHT_BRACE &kp PIPE
+            &trans &kp F7 &kp F8 &kp F9 &kp F10 &kp F11                        &kp F12 &trans &kp HOME &kp END &trans &trans
+                        &trans &trans                                             &trans &trans
                         &trans &trans                                             &trans &trans
                         &trans &trans                                             &trans &trans
                         &trans &trans                                             &trans &trans
             >;
         };
-        layer_6 {
+
+        layer_7 {
+            label = "raise";
+            bindings = <
+            &kp GRAVE &kp N1 &kp N2 &kp N3 &kp N4 &kp N5       &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp BSPC
+            &trans &kp F1 &kp F2 &kp F3 &kp F4 &kp F5          &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp EQUAL
+            &trans &kp F7 &kp F8 &kp F9 &kp F10 &kp F11        &kp F12 &trans &kp PAGE_UP &kp PAGE_DOWN &trans &trans
+                        &trans &trans                                       &kp LEFT &trans
+                        &trans &trans                                       &trans &trans
+                        &trans &trans                                       &trans &trans
+                        &trans &trans                                       &trans &trans
+            >;
+        };
+
+        layer_8 {
             label = "system";
             bindings = <
-            &bl BL_TOG &bat BAT_IND &sys_reset &bootloader &bt BT_CLR &trans                &trans &bt BT_CLR &bootloader &sys_reset &bat BAT_IND &bl BL_TOG
-            &bt BT_NXT &trans &trans &trans &trans &trans                &trans &trans &trans &trans &trans &trans
-            &bt BT_PRV &trans &trans &trans &trans &trans                &trans &trans &trans &trans &trans
-                   &trans &trans                                                   &trans &trans
-                   &trans &trans                                                   &trans &trans
-                   &trans &trans                                                   &trans &trans
+            &bl BL_TOG &bat BAT_IND &sys_reset &bootloader &bt BT_CLR &trans    &trans &bt BT_CLR &bootloader &sys_reset &bat BAT_IND &bl BL_TOG
+            &bt BT_NXT &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans &trans
+            &bt BT_PRV &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans
+                   &trans &trans                                                         &trans &trans
+                   &trans &trans                                                         &trans &trans
+                   &trans &trans                                                         &trans &trans
             >;
         };
     };
