@@ -5,39 +5,103 @@
 #include <dt-bindings/zmk/backlight.h>
 #include <dt-bindings/zmk/battery_indicator.h>
 
-#define DEFAULT 0
-#define FUNCTION 1
-#define SYSTEM 2
+#define _DEFAULT 0
+#define _DEFAULT_OSX 1
+#define _ESC 3
+#define _ESC_OSX 4
+#define _FUNCTION 5
+#define _SYSTEM 6
 
 / {
+    behaviors {
+        td_layr: tap_dance_layer {
+            compatible = "zmk,behavior-hold-tap";
+            label = "TD Layer";
+            #binding-cells = <2>;
+            tapping-term-ms = <175>;
+            quick-tap-ms = <0>;
+            flavor = "hold-preferred";
+            bindings = <&mo>, <&kp>;
+        };
+
+        td_key: tap_dance_tab {
+            compatible = "zmk,behavior-hold-tap";
+            label = "TD Default Key";
+            #binding-cells = <2>;
+            tapping-term-ms = <175>;
+            quick-tap-ms = <0>;
+            flavor = "hold-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
         layer_1 {
             label = "default";
             bindings = <
-            &kp ESC &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &kp O &kp P &kp BACKSLASH
-            &kp TAB &kp A &kp S &kp D &kp F &kp G           &kp H &kp J &kp K &kp L &kp SEMICOLON &kp APOSTROPHE
-            &mo FUNCTION &kp Z &kp X &kp C &kp V &kp B      &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &mo FUNCTION
-                        &kp CAPS &tog FUNCTION                              &kp LBKT &kp RBKT
+            &td_key TILDE TAB &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &kp O &kp P &kp BACKSLASH
+            &td_layr _ESC ESC  &kp A &kp S &kp D &kp F &kp G           &kp H &kp J &kp K &kp L &kp SEMICOLON &kp APOSTROPHE
+            &kp LSHIFT &kp Z &kp X &kp C &kp V &kp B      &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &mo _FUNCTION
+                        &kp LSHIFT &tog _FUNCTION                              &kp LBKT &kp RBKT
                         &kp LSHIFT &kp SPACE                                &kp ENTER &kp BACKSPACE
-                        &kp LALT &kp LCTRL                                  &kp RCTRL &kp RALT 
-                        &mo SYSTEM &kp DEL                                  &kp RGUI &mo SYSTEM
+                        &kp LALT &kp LCTRL                                  &kp RCTRL &kp RALT
+                        &mo _SYSTEM &kp DEL                                  &kp RGUI &mo _SYSTEM
             >;
         };
 
         layer_2 {
+            label = "default_osx";
+            bindings = <
+            &kp ESC &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &kp O &kp P &kp BACKSLASH
+            &kp TAB &kp A &kp S &kp D &kp F &kp G           &kp H &kp J &kp K &kp L &kp SEMICOLON &kp APOSTROPHE
+            &mo _FUNCTION &kp Z &kp X &kp C &kp V &kp B      &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &mo _FUNCTION
+                        &kp CAPS &tog _FUNCTION                              &kp LBKT &kp RBKT
+                        &kp LSHIFT &kp SPACE                                &kp ENTER &kp BACKSPACE
+                        &kp LALT &kp LCTRL                                  &kp RCTRL &kp RALT
+                        &mo _SYSTEM &kp DEL                                  &kp RGUI &mo _SYSTEM
+            >;
+        };
+
+        layer_3 {
+            label = "esc";
+            bindings = <
+            &kp ESC &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &kp O &kp P &kp BACKSLASH
+            &kp TAB &kp A &kp S &kp D &kp F &kp G           &kp H &kp J &kp K &kp L &kp SEMICOLON &kp APOSTROPHE
+            &mo _FUNCTION &kp Z &kp X &kp C &kp V &kp B      &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &mo _FUNCTION
+                        &kp CAPS &tog _FUNCTION                              &kp LBKT &kp RBKT
+                        &kp LSHIFT &kp SPACE                                &kp ENTER &kp BACKSPACE
+                        &kp LALT &kp LCTRL                                  &kp RCTRL &kp RALT
+                        &mo _SYSTEM &kp DEL                                  &kp RGUI &mo _SYSTEM
+            >;
+        };
+
+        layer_4 {
+            label = "esc_osx";
+            bindings = <
+            &kp ESC &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &kp O &kp P &kp BACKSLASH
+            &kp TAB &kp A &kp S &kp D &kp F &kp G           &kp H &kp J &kp K &kp L &kp SEMICOLON &kp APOSTROPHE
+            &mo _FUNCTION &kp Z &kp X &kp C &kp V &kp B      &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &mo _FUNCTION
+                        &kp CAPS &tog _FUNCTION                              &kp LBKT &kp RBKT
+                        &kp LSHIFT &kp SPACE                                &kp ENTER &kp BACKSPACE
+                        &kp LALT &kp LCTRL                                  &kp RCTRL &kp RALT
+                        &mo _SYSTEM &kp DEL                                  &kp RGUI &mo _SYSTEM
+            >;
+        };
+
+        layer_5 {
             label = "function";
             bindings = <
             &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6                &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12
-            &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6                &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp EQUAL 
+            &kp N1 &kp N2 &kp N3 &kp N4 &kp N5 &kp N6                &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp EQUAL
             &trans &kp GRAVE &kp PSCRN &kp INS &kp HOME &kp END      &kp PG_UP &kp PG_DN &kp K_APP &kp UP &kp RIGHT &trans
-                        &trans &trans                                             &kp LEFT &kp DOWN 
+                        &trans &trans                                             &kp LEFT &kp DOWN
                         &trans &trans                                             &trans &trans
                         &trans &trans                                             &trans &trans
                         &trans &trans                                             &trans &trans
             >;
         };
-        layer_3 {
+        layer_6 {
             label = "system";
             bindings = <
             &bl BL_TOG &bat BAT_IND &sys_reset &bootloader &bt BT_CLR &trans                &trans &bt BT_CLR &bootloader &sys_reset &bat BAT_IND &bl BL_TOG
