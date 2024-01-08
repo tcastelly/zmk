@@ -229,7 +229,7 @@
             &bl BL_TOG &bat BAT_IND &sys_reset &bootloader &bt BT_CLR &trans    &trans &bt BT_CLR &bootloader &sys_reset &bat BAT_IND &bl BL_TOG
             &bt BT_NXT &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans &trans
             &bt BT_PRV &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans
-                   &trans &trans                                                         &trans &trans
+                   &mo _DEFAULT &mo _DEFAULT_OSX                                                         &trans &trans
                    &trans &trans                                                         &trans &trans
                    &trans &trans                                                         &trans &trans
             >;
