@@ -139,7 +139,7 @@
             &td_layr _ESC ESC  &kp A &kp S &kp D &kp F &kp G          &kp H &kp J &kp K &td_key LBRC L &td_key RBRC SEMICOLON &kp APOSTROPHE
             &kp LSHIFT &kp Z &kp X &kp C &kp V &kp B                  &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &td_key LSHFT ENTER
                         &kp PAGE_UP &kp PAGE_DOWN                          &kp LBKT &kp RBKT
-                        &kp LCTRL &to _LOWER                               &kp SPACE &to _RAISE
+                        &kp LCTRL &mo _LOWER                               &kp SPACE &mo _RAISE
                         &kp LWIN &kp LALT                                  &macro_ralt &kp RCTRL
                         &mo _SYSTEM &kp DEL                                &kp RGUI &mo _SYSTEM
             >;
@@ -152,7 +152,7 @@
             &td_layr _ESC_OSX ESC  &kp A &kp S &kp D &kp F &kp G      &kp H &kp J &kp K &td_key LBRC L &td_key RBRC SEMICOLON &kp APOSTROPHE
             &kp LSHIFT &kp Z &kp X &kp C &kp V &kp B                  &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &td_key LSHFT ENTER
                         &kp PAGE_UP &kp PAGE_DOWN                          &kp LBKT &kp RBKT
-                        &kp LCTRL &to _LOWER                               &kp SPACE &to _RAISE
+                        &kp LCTRL &mo _LOWER                               &kp SPACE &mo _RAISE
                         &kp LWIN &kp LGUI                                  &macro_ralt &kp RCTRL
                         &mo _SYSTEM &kp DEL                                &kp RGUI &mo _SYSTEM
             >;
@@ -229,7 +229,7 @@
             &bl BL_TOG &bat BAT_IND &sys_reset &bootloader &bt BT_CLR &trans    &trans &bt BT_CLR &bootloader &sys_reset &bat BAT_IND &bl BL_TOG
             &bt BT_NXT &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans &trans
             &bt BT_PRV &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans
-                   &mo _DEFAULT &mo _DEFAULT_OSX                                                         &trans &trans
+                   &mo _DEFAULT &to _DEFAULT_OSX                                                         &trans &trans
                    &trans &trans                                                         &trans &trans
                    &trans &trans                                                         &trans &trans
             >;
