@@ -123,9 +123,9 @@
             compatible = "zmk,behavior-hold-tap";
             label = "TD Default Key";
             #binding-cells = <2>;
-            tapping-term-ms = <175>;
+            tapping-term-ms = <200>;
             quick-tap-ms = <0>;
-            flavor = "hold-preferred";
+            flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
         };
     };
@@ -148,13 +148,13 @@
         layer_2 {
             label = "default_osx";
             bindings = <
-            &td_key TILDE TAB &kp Q &kp W &kp E &kp R &kp T           &kp Y &kp U &kp I &td_key LPAR O &td_key RPAR P &td_key RA(BSPC) BSPC
-            &td_layr _ESC_OSX ESC  &kp A &kp S &kp D &kp F &kp G      &kp H &kp J &kp K &td_key LBRC L &td_key RBRC SEMICOLON &kp APOSTROPHE
-            &kp LSHIFT &kp Z &kp X &kp C &kp V &kp B                  &kp N &kp M &kp COMMA &kp PERIOD &kp SLASH &td_key LSHFT ENTER
-                        &kp PAGE_UP &kp PAGE_DOWN                          &kp LBKT &kp RBKT
-                        &kp LCTRL &mo _LOWER                               &kp SPACE &mo _RAISE
-                        &kp LWIN &kp LGUI                                  &macro_ralt &kp RCTRL
-                        &mo _SYSTEM &kp DEL                                &kp RGUI &mo _SYSTEM
+            &trans &trans &trans &trans &trans &trans                 &trans &trans &trans &trans &trans &td_key RA(BSPC) BSPC
+            &td_layr _ESC_OSX ESC &trans &trans &trans &trans &trans  &trans &trans &trans &trans &trans &trans
+            &trans &trans &trans &trans &trans &trans                 &trans &trans &trans &trans &trans &trans
+                        &trans &trans                                      &trans &trans
+                        &trans &trans                                      &trans &trans
+                        &kp LALT &kp LWIN                                  &trans &trans
+                        &trans &trans                                      &trans &trans
             >;
         };
 
@@ -162,7 +162,7 @@
             label = "esc";
             bindings = <
             &trans &macro_accent_grave &trans &macro_grave_e &macro_jet_rnm &trans         &macro_accent_circum &trans &trans &trans &trans &td_key LC(DEL) DEL
-            &trans &macro_grave_a &trans &trans &macro_jet_find &trans                     &td_key LC(LEFT) LEFT  &kp DOWN &kp UP &td_key LA(RIGHT) RIGHT &trans &macro_accent_trema
+            &trans &macro_grave_a &trans &trans &macro_jet_find &trans                     &td_key LC(LEFT) LEFT  &kp DOWN &kp UP &td_key LC(RIGHT) RIGHT &trans &macro_accent_trema
             &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans
                         &trans &trans                                                      &trans &trans
                         &trans &trans                                                      &trans &trans
@@ -174,8 +174,8 @@
         layer_4 {
             label = "esc_osx";
             bindings = <
-            &trans &macro_accent_grave &trans &macro_grave_e &macro_jet_rnm &trans         &macro_accent_circum &trans &trans &trans &trans &td_key LA(DEL) DEL
-            &trans &macro_grave_a &trans &trans &macro_jet_find &trans                     &td_key LA(LEFT) LEFT  &kp DOWN &kp UP &td_key LC(RIGHT) RIGHT &trans &macro_accent_trema
+            &trans &trans &trans &trans &trans &trans         &trans &trans &trans &trans &trans &td_key LA(DEL) DEL
+            &trans &trans &trans &trans &trans &trans         &td_key LA(LEFT) LEFT &trans &trans &td_key LA(RIGHT) RIGHT &trans &trans
             &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans
                         &trans &trans                                                      &trans &trans
                         &trans &trans                                                      &trans &trans
@@ -214,9 +214,9 @@
             label = "raise";
             bindings = <
             &kp GRAVE &kp N1 &kp N2 &kp N3 &kp N4 &kp N5       &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &kp BSPC
-            &trans &kp F1 &kp F2 &kp F3 &kp F4 &kp F5          &kp N7 &kp N8 &kp N9 &kp N0 &kp MINUS &kp EQUAL
-            &trans &kp F7 &kp F8 &kp F9 &kp F10 &kp F11        &kp F12 &trans &kp PAGE_UP &kp PAGE_DOWN &trans &trans
-                        &trans &trans                                       &kp LEFT &trans
+            &trans &trans &trans &trans &trans &trans          &trans &kp UNDERSCORE &kp EQUAL &trans &trans &kp BACKSLASH
+            &trans &trans &trans &trans &trans &trans          &trans &trans &kp PAGE_UP &kp PAGE_DOWN &trans &trans
+                        &trans &trans                                       &trans &trans
                         &trans &trans                                       &trans &trans
                         &trans &trans                                       &trans &trans
                         &trans &trans                                       &trans &trans
@@ -227,9 +227,9 @@
             label = "system";
             bindings = <
             &bl BL_TOG &bat BAT_IND &sys_reset &bootloader &bt BT_CLR &trans    &trans &bt BT_CLR &bootloader &sys_reset &bat BAT_IND &bl BL_TOG
-            &bt BT_NXT &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans &trans
+            &bt BT_NXT &trans &trans &trans &trans &trans                       &to _DEFAULT &to _DEFAULT_OSX &trans &trans &trans &trans
             &bt BT_PRV &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans
-                   &mo _DEFAULT &to _DEFAULT_OSX                                                         &trans &trans
+                   &trans &trans                                                         &trans &trans
                    &trans &trans                                                         &trans &trans
                    &trans &trans                                                         &trans &trans
             >;
