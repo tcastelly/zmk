@@ -50,6 +50,42 @@
                 ;
         };
 
+        macro_jet_opti: macro_jet_opti {
+            compatible = "zmk,behavior-macro";
+            label = "MACRO Jetbrains Opti";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LALT>
+                , <&macro_pause_for_release>
+                , <&macro_tap &kp O>
+                , <&macro_release &kp LALT &kp LCTRL>
+                ;
+        };
+
+        macro_jet_format: macro_jet_format {
+            compatible = "zmk,behavior-macro";
+            label = "MACRO Jetbrains Format";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL &kp LALT>
+                , <&macro_pause_for_release>
+                , <&macro_tap &kp L>
+                , <&macro_release &kp LALT &kp LCTRL>
+                ;
+        };
+
+        macro_jet_format_osx: macro_jet_format_osx {
+            compatible = "zmk,behavior-macro";
+            label = "MACRO Jetbrains Format OSX";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LALT &kp LGUI>
+                , <&macro_pause_for_release>
+                , <&macro_tap &kp L>
+                , <&macro_release &kp LGUI &kp LALT>
+                ;
+        };
+
         macro_grave_e: macro_grave_e {
             compatible = "zmk,behavior-macro";
             label = "MACRO Grave E";
@@ -161,7 +197,7 @@
         layer_3 {
             label = "esc";
             bindings = <
-            &trans &macro_accent_grave &trans &macro_grave_e &macro_jet_rnm &trans         &macro_accent_circum &trans &trans &trans &trans &td_key LC(DEL) DEL
+            &trans &macro_accent_grave &trans &macro_grave_e &macro_jet_rnm &trans         &macro_accent_circum &trans &trans &macro_jet_opti &macro_jet_format &td_key LC(DEL) DEL
             &trans &macro_grave_a &trans &trans &macro_jet_find &trans                     &td_key LC(LEFT) LEFT  &kp DOWN &kp UP &td_key LC(RIGHT) RIGHT &trans &macro_accent_trema
             &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans
                         &trans &trans                                                      &trans &trans
@@ -174,8 +210,8 @@
         layer_4 {
             label = "esc_osx";
             bindings = <
-            &trans &trans &trans &trans &trans &trans         &trans &trans &trans &trans &trans &td_key LA(DEL) DEL
-            &trans &trans &trans &trans &trans &trans         &td_key LA(LEFT) LEFT &trans &trans &td_key LA(RIGHT) RIGHT &trans &trans
+            &trans &macro_accent_grave &trans &macro_grave_e &macro_jet_rnm &trans         &macro_accent_circum &trans &trans &macro_jet_opti &macro_jet_format_osx &td_key LA(DEL) DEL
+            &trans &macro_grave_a &trans &trans &macro_jet_find &trans                     &td_key LA(LEFT) LEFT &trans &trans &td_key LA(RIGHT) RIGHT &trans &trans
             &trans &trans &trans &trans &trans &trans                                      &trans &trans &trans &trans &trans &trans
                         &trans &trans                                                      &trans &trans
                         &trans &trans                                                      &trans &trans
@@ -226,7 +262,7 @@
         layer_8 {
             label = "system";
             bindings = <
-            &bl BL_TOG &bat BAT_IND &sys_reset &bootloader &bt BT_CLR &trans    &trans &bt BT_CLR &bootloader &sys_reset &bat BAT_IND &bl BL_TOG
+            &bl BL_TOG &bat BAT_IND &trans &bootloader &bt BT_CLR &trans    &trans &bt BT_CLR &bootloader &trans &bat BAT_IND &bl BL_TOG
             &bt BT_NXT &trans &trans &trans &trans &trans                       &to _DEFAULT &to _DEFAULT_OSX &trans &trans &trans &trans
             &bt BT_PRV &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans
                    &trans &trans                                                         &trans &trans
