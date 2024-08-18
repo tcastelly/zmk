@@ -18,7 +18,8 @@
         // Behavior can be invoked on peripherals, so name must be <= 8 characters.
         bootloader: bootload {
             compatible = "zmk,behavior-reset";
-            type = <RST_UF2>;
+            label = "BOOTLOAD";
+            type = <ZMK_RESET_BOOTLOADER>;
             #binding-cells = <0>;
             display-name = "Bootloader";
         };

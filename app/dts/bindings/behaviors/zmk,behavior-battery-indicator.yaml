@@ -1,0 +1,8 @@
+# Copyright (c) 2023 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: Battery Indicator Behavior
+
+compatible: "zmk,behavior-battery-indicator"
+
+include: one_param.yaml

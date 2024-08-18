@@ -39,6 +39,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #if IS_ENABLED(CONFIG_ZMK_BLE_PASSKEY_ENTRY)
 #include <zmk/events/keycode_state_changed.h>
+#include "ble.h"
 
 #define PASSKEY_DIGITS 6
 
@@ -334,6 +335,25 @@ struct bt_conn *zmk_ble_active_profile_conn(void) {
 }
 
 char *zmk_ble_active_profile_name(void) { return profiles[active_profile].name; }
+
+void zmk_ble_unpair_all(void) {
+    LOG_WRN("Clearing all existing BLE bond information from the keyboard");
+
+    int err = bt_unpair(BT_ID_DEFAULT, NULL);
+    if (err) {
+        LOG_ERR("Failed to unpair default identity: %d", err);
+    }
+
+    for (int i = 0; i < ZMK_BLE_PROFILE_COUNT; i++) {
+        char setting_name[15];
+        sprintf(setting_name, "ble/profiles/%d", i);
+
+        err = settings_delete(setting_name);
+        if (err) {
+            LOG_ERR("Failed to delete setting: %d", err);
+        }
+    }
+}
 
 #if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
 
@@ -678,6 +698,8 @@ static int zmk_ble_complete_startup(void) {
     }
 
 #endif // IS_ENABLED(CONFIG_ZMK_BLE_CLEAR_BONDS_ON_START)
+
+    zmk_ble_unpair_all();
 
     bt_conn_cb_register(&conn_callbacks);
     bt_conn_auth_cb_register(&zmk_ble_auth_cb_display);

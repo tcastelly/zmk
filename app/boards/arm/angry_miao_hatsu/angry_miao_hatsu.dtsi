@@ -1,0 +1,134 @@
+/*
+ * Copyright (c) 2017 Linaro Limited
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <nordic/nrf52840_qiaa.dtsi>
+#include <dt-bindings/zmk/matrix_transform.h>
+ 
+ / {
+     model = "Angry Miao Hatsu";
+     compatible = "angry_miao,hatsu";
+ 
+     chosen {
+        zephyr,console = &cdc_acm_uart;
+		zephyr,shell-uart = &cdc_acm_uart;
+        zephyr,code-partition = &code_partition;
+        zephyr,sram = &sram0;
+        zephyr,flash = &flash0;
+        zmk,kscan = &kscan0;
+        zmk,matrix_transform = &layout_grid_transform;
+     };
+
+
+    layout_grid_transform:
+        keymap_transform_0 {
+            compatible = "zmk,matrix-transform";
+            columns = <8>;
+            rows = <16>;
+            map = <
+            RC(8, 4) RC(9, 4) RC(10, 4) RC(11, 4) RC(12, 4) RC(13, 4)    RC(0, 2) RC(1, 2) RC(2, 2) RC(3, 2) RC(4, 2) RC(5, 2)
+            RC(8, 5) RC(9, 5) RC(10, 5) RC(11, 5) RC(12, 5) RC(13, 5)    RC(0, 1) RC(1, 1) RC(2, 1) RC(3, 1) RC(4, 1) RC(5, 1)
+            RC(8, 6) RC(9, 6) RC(10, 6) RC(11, 6) RC(12, 6) RC(13, 6)    RC(0, 0) RC(1, 0) RC(2, 0) RC(3, 0) RC(4, 0) RC(5, 0)
+                              RC(10, 7) RC(11, 7)                                          RC(2, 3) RC(3, 3)
+                                                  RC(14, 4) RC(15, 6)    RC(7, 0) RC(6, 2)
+                                                  RC(14, 5) RC(15, 5)    RC(7, 1) RC(6, 1)
+                                                  RC(14, 6) RC(15, 4)    RC(7, 2) RC(6, 0)
+            >;
+    };
+ };
+
+/ {
+    left_bootloader_key: left_bootloader_key {
+        compatible = "zmk,boot-magic-key";
+        key-position = <0>;
+        jump-to-bootloader;
+        status = "disabled";
+    };
+
+    right_bootloader_key: right_bootloader_key {
+        compatible = "zmk,boot-magic-key";
+        key-position = <11>;
+        jump-to-bootloader;
+        status = "disabled";
+    };
+};
+ 
+ &adc {
+     status = "okay";
+ };
+ 
+ &gpiote {
+     status = "okay";
+ };
+ 
+ &gpio0 {
+     status = "okay";
+ };
+ 
+ &gpio1 {
+     status = "okay";
+ };
+
+/* 
+ &uart0 {
+     compatible = "nordic,nrf-uarte";
+     status = "okay";
+     current-speed = <115200>;
+     //pinctrl-0 = <&uart0_default>;
+     //pinctrl-1 = <&uart0_sleep>;
+     //pinctrl-names = "default", "sleep";
+ };
+ */
+
+ &usbd {
+    status = "okay";
+    cdc_acm_uart: cdc_acm_uart {
+        compatible = "zephyr,cdc-acm-uart";
+        label = "CDC_ACM_0";
+    };
+};
+
+&flash0 {
+    /*
+     * For more information, see:
+     * http://docs.zephyrproject.org/latest/devices/dts/flash_partitions.html
+     */
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        sd_partition: partition@0 {
+            label = "mbr";
+            reg = <0x00000000 0x00001000>;
+        };
+
+        code_partition: partition@1000 {
+            label = "code_partition";
+            reg = <0x00001000 0x000d3000>;
+        };
+
+        /*
+         * The flash starting at 0x000d4000 and ending at
+         * 0x000f3fff is reserved for use by the application.
+         */
+
+        /*
+         * Storage partition will be used by FCB/LittleFS/NVS
+         * if enabled.
+         */
+        storage_partition: partition@d4000 {
+            label = "storage";
+            reg = <0x000d4000 0x00020000>;
+        };
+
+        boot_partition: partition@f4000 {
+            label = "adafruit_boot";
+            reg = <0x000f4000 0x0000c000>;
+        };
+
+    };
+};
