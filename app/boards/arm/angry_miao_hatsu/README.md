@@ -1,5 +1,5 @@
 # Create Docker Image
-> cd zmk_hatsu/zmk/.devcontainer/
+> cd ./zmk/.devcontainer/
 
 > docker build -t zmk:3.5 .
 
