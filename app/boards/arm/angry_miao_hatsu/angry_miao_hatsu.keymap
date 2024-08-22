@@ -262,7 +262,7 @@
         layer_8 {
             label = "system";
             bindings = <
-            &bl BL_TOG &bat BAT_IND &trans &bootloader &bt BT_CLR &trans    &trans &bt BT_CLR &bootloader &trans &bat BAT_IND &bl BL_TOG
+            &bl BL_TOG &bat BAT_IND &trans &trans &bt BT_CLR &trans    &trans &bt BT_CLR &trans &trans &bat BAT_IND &bl BL_TOG
             &bt BT_NXT &trans &trans &trans &trans &trans                       &to _DEFAULT &to _DEFAULT_OSX &trans &trans &trans &trans
             &bt BT_PRV &trans &trans &trans &trans &trans                       &trans &trans &trans &trans &trans
                    &trans &trans                                                         &trans &trans
