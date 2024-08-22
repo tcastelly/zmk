@@ -7,6 +7,7 @@
 ## Delete previous module
 > from local machine: rm -rf modules && rm -rf .west
 
+## Create the container
 > docker run -ti --rm -v `pwd`:/opt/zmk zmk:3.5
 
 # Init west (inside container)
