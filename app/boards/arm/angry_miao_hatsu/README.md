@@ -3,8 +3,11 @@
 
 > docker build -t zmk:3.5 .
 
+## Comeback to ZMK root folder
+> cd ../
+
 ## Delete previous module
-**From local machine**
+**From zmk root folder**
 
 > rm -rf modules && rm -rf .west
 
