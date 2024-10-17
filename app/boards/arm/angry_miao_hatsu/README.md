@@ -3,19 +3,28 @@
 
 > docker build -t zmk:3.5 .
 
-# Run Docker Container (from zmk folder)
 ## Delete previous module
-> from local machine: rm -rf modules && rm -rf .west
+**From local machine**
 
-## Create the container
+> rm -rf modules && rm -rf .west
+
+## Create the container 
+**From zmk root folder**
+
 > docker run -ti --rm -v `pwd`:/opt/zmk zmk:3.5
 
-# Init west (inside container)
+# Init west 
+**From the container**
+
 > west init -l /opt/zmk/app/
 
 > cd /opt/zmk && west update
 
-# From /opt/zmk/app/ folder
+# Start building
+**From the container**
+
+> cd /opt/zmk/app/
+
 > west build -d build/left -b angry_miao_hatsu_left
 
 > west build -d build/right -b angry_miao_hatsu_right
